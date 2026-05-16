@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+
+{% load static %}
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatIA</title>
+
+    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="icon" href="{% static 'img/logochat.png' %}">
+</head>
+
+<body class="font-{{ perfil.tamano_fuente|default:'normal' }}">
+
+<div class="app-layout">
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-logo">
+            <img src="{% static 'img/logochat.png' %}"
+                 alt="Logo ChatIA"
+                 class="logo-image">
+            <h2>ChatIA</h2>
+        </div>
+
+        <a href="{% url 'nueva_conversacion' %}" class="btn new-chat-btn">
+            + Nueva conversación
+        </a>
+
+
+        <div id="sidebar-conversations">
+            {% include "partials/sidebar.html" %}
+        </div>
+
+    </aside>
+
+    <main class="main-area">
+
+        <nav class="topbar">
+            <button type="button" class="sidebar-toggle" id="sidebar-toggle">
+                ☰
+            </button>
+
+            <a href="{% url 'index' %}" class="topbar-brand-link">
+                <div class="topbar-brand">
+                    <img src="{% static 'img/logochat.png' %}" alt="Logo ChatIA">
+                    <span>ChatIA</span>
+                </div>
+
+            </a>
+
+            <div class="topbar-user">
+                {% if user.is_authenticated %}
+
+                    <span>
+                        {% if perfil.alias %}
+                            {{ perfil.alias }}
+                        {% else %}
+                            {{ user.username }}
+                        {% endif %}
+
+                        {% if user.is_staff %}
+                            (admin)
+                        {% endif %}
+                    </span>
+
+                    <a href="{% url 'ayuda' %}" class="btn btn-outline-light btn-sm">
+                        Ayuda
+                    </a>
+                    <a href="{% url 'configuracion_usuario' %}" class="btn btn-outline-light btn-sm">
+                        Configuración
+                    </a>
+
+                    <a href="{% url 'logout' %}" class="btn btn-light btn-sm">
+                        Logout
+                    </a>
+
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-light btn-sm">Login</a>
+                {% endif %}
+            </div>
+
+        </nav>
+
+        <section class="page-content">
+            {% block content %}
+            {% endblock %}
+        </section>
+
+        <footer class="app-footer">
+            <span>Conversaciones: {{ total_conversaciones|default:0 }}</span>
+            <span>Mensajes: {{ total_mensajes|default:0 }}</span>
+
+            {% if user.is_authenticated %}
+                <span>Usuario: {{ user.username }}</span>
+            {% else %}
+                <span>Usuario no autenticado</span>
+            {% endif %}
+        </footer>
+
+    </main>
+
+</div>
+
+<script src="{% static 'bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'htmx.min.js' %}"></script>
+
+<script>
+    const sidebar = document.getElementById("sidebar");
+    const toggleButton = document.getElementById("sidebar-toggle");
+
+    toggleButton.addEventListener("click", function () {
+        sidebar.classList.toggle("sidebar-hidden");
+    });
+</script>
+
+</body>
+</html>

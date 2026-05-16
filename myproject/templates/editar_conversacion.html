@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="chat-page">
+
+    <div class="chat-title">
+        <h1>Editar conversación</h1>
+        <p>Cambia el nombre de esta conversación.</p>
+    </div>
+
+    <div class="chat-form">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <button type="submit" class="btn send-btn">
+                Guardar cambios
+            </button>
+
+            <a href="{% url 'ver_conversacion' conversacion.id %}" class="btn btn-secondary">
+                Cancelar
+            </a>
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}

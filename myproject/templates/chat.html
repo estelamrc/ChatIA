@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="chat-page">
+
+    <div class="chat-title">
+
+        <div class="chat-title-row">
+            <div>
+
+                <div style="display:flex; align-items:center; gap:12px;">
+
+                    <h1>{{ conversacion.titulo }}</h1>
+
+                    {% if conversacion.hash_publico %}
+
+                        <a href="{% url 'ver_conversacion_publica' conversacion.hash_publico %}"
+                           class="share-btn"
+                           target="_blank"
+                           data-share-url="{{ request.scheme }}://{{ request.get_host }}{% url 'ver_conversacion_publica' conversacion.hash_publico %}"
+                           title="Copiar enlace público">
+                            🔗
+                        </a>
+
+                    {% else %}
+                        <a href="{% url 'compartir_conversacion' conversacion.id %}"
+                           class="share-btn"
+                           title="Hacer pública la conversación">
+                            🔗
+                        </a>
+                    {% endif %}
+                </div>
+                <p>Escribe tus dudas y ChatIA te responderá usando IA.</p>
+            </div>
+
+            <a href="{% url 'conversacion_json' conversacion.id %}"
+               class="json-chat-btn">
+                Ver JSON
+            </a>
+
+            <a href="{% url 'conversacion_json' conversacion.id %}"
+               download
+               class="download-chat-btn">
+                ⭳
+            </a>
+        </div>
+
+    </div>
+
+    <div class="messages-container" id="messages-container">
+
+        <div id="messages-list">
+            {% include "partials/mensajes.html" %}
+        </div>
+
+        <div id="typing-indicator" class="typing-indicator" style="display:none;">
+
+            <div class="message-row ai-row">
+                <div class="message-bubble ai-bubble">
+
+                    <strong>ChatIA</strong>
+
+                    <div class="typing-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="chat-form">
+
+        <form method="post"
+              class="message-form"
+              hx-post="{% url 'ver_conversacion' conversacion.id %}"
+              hx-target="#messages-list"
+              hx-swap="innerHTML">
+
+            {% csrf_token %}
+
+            <div class="message-input-container">
+
+                {{ form.mensaje }}
+
+                <button type="submit" class="btn send-btn">
+                    Enviar
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<div id="copy-popup" class="copy-popup">
+    Enlace copiado en el portapapeles
+</div>
+
+<script>
+    const messagesContainer = document.getElementById("messages-container");
+    const textarea = document.querySelector(".message-input-container textarea");
+    const form = document.querySelector(".message-form");
+    const typingIndicator = document.getElementById("typing-indicator");
+    const messagesList = document.getElementById("messages-list");
+
+
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+    textarea.addEventListener("keydown", function (event) {
+        if (event.key === "Enter" && !event.shiftKey) {
+            event.preventDefault();
+            form.requestSubmit();
+        }
+    });
+
+    document.body.addEventListener("htmx:beforeRequest", function (event) {
+        if (event.detail.elt.classList.contains("message-form")) {
+
+            const textoUsuario = textarea.value.trim();
+
+            textarea.value = "";
+
+            if (textoUsuario !== "") {
+                const userRow = document.createElement("div");
+                userRow.className = "message-row user-row temp-user-message";
+
+                userRow.innerHTML = `
+                    <div class="message-bubble user-bubble">
+                        <strong>Tú</strong>
+                        <p>${textoUsuario}</p>
+                    </div>
+                `;
+
+                messagesList.appendChild(userRow);
+            }
+
+            typingIndicator.style.display = "block";
+
+            setTimeout(function () {
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 50);
+        }
+    });
+
+    document.body.addEventListener("htmx:afterRequest", function (event) {
+        if (event.detail.elt.classList.contains("message-form")) {
+
+            event.detail.elt.reset();
+
+            htmx.ajax("GET", "{% url 'sidebar_partial' %}", {
+                target: "#sidebar-conversations",
+                swap: "innerHTML"
+            });
+
+            typingIndicator.style.display = "none";
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+    });
+    const shareButton = document.querySelector(".share-btn");
+    const copyPopup = document.getElementById("copy-popup");
+
+    if (shareButton && copyPopup) {
+        shareButton.addEventListener("click", function (event) {
+            if (shareButton.dataset.shareUrl) {
+                event.preventDefault();
+
+                navigator.clipboard.writeText(shareButton.dataset.shareUrl);
+
+                copyPopup.classList.add("show-copy-popup");
+
+                setTimeout(function () {
+                    copyPopup.classList.remove("show-copy-popup");
+                    window.open(shareButton.dataset.shareUrl, "_blank");
+                }, 1200);
+            }
+        });
+    }
+</script>
+<!-- dos ultimas partes del script para el enter de enviar mensaje-->
+{% endblock %}

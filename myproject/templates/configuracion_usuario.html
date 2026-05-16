@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="chat-page">
+
+    <div class="chat-title">
+        <h1>Configuración</h1>
+        <p>Personaliza tu perfil.</p>
+    </div>
+
+    <div class="chat-form">
+
+        <h3>Usuario: {{ user.username }}</h3>
+
+        <form method="post">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button type="submit" class="btn send-btn">
+                Guardar configuración
+            </button>
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

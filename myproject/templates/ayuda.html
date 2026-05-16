@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="chat-page">
+
+    <div class="chat-title">
+        <h1>Ayuda</h1>
+        <p>Guía rápida de uso de ChatIA.</p>
+    </div>
+
+    <div class="help-container">
+
+        <div class="help-card">
+            <h3>¿Qué es ChatIA?</h3>
+            <p>
+                ChatIA es una aplicación web desarrollada con Django que permite
+                mantener conversaciones con un modelo de inteligencia artificial mediante
+                una API externa de NVIDIA Build.
+            </p>
+        </div>
+
+        <div class="help-card">
+            <h3>Usuarios</h3>
+            <p>
+                Puedes registrarte, iniciar sesión y cerrar sesión. Cada usuario
+                tiene sus propias conversaciones, mensajes y configuración personal.
+            </p>
+        </div>
+
+        <div class="help-card">
+            <h3>Conversaciones</h3>
+            <p>
+                Puedes crear nuevas conversaciones, abrir conversaciones anteriores,
+                editar su nombre, marcarlas como favoritas o eliminarlas.
+            </p>
+        </div>
+
+        <div class="help-card">
+            <h3>Favoritos</h3>
+            <p>
+                Las conversaciones favoritas aparecen destacadas con una estrella
+                y se muestran primero en la barra lateral izquierda.
+            </p>
+        </div>
+
+        <div class="help-card">
+            <h3>Títulos automáticos</h3>
+            <p>
+                Cuando creas una conversación nueva, ChatIA puede generar un nombre
+                automáticamente a partir del primer mensaje. Si editas el nombre
+                manualmente, ya no se cambia automáticamente.
+            </p>
+        </div>
+
+        <div class="help-card">
+            <h3>Memoria de conversación</h3>
+            <p>
+                ChatIA mantiene el contexto de cada conversación. Esto permite que
+                la IA recuerde mensajes anteriores dentro del mismo chat.
+            </p>
+        </div>
+
+        <div class="help-card">
+            <h3>Configuración</h3>
+            <p>
+                Desde la configuración puedes cambiar tu alias, la temperatura del
+                modelo y el tamaño de letra de la interfaz.
+            </p>
+        </div>
+
+        <div class="help-card">
+            <h3>Envío de mensajes</h3>
+            <p>
+                Puedes enviar mensajes pulsando el botón Enviar o usando la tecla Enter.
+                Si quieres escribir varias líneas, puedes usar Shift + Enter.
+            </p>
+        </div>
+
+        <div class="help-card">
+            <h3>Conversaciones públicas</h3>
+            <p>
+                Puedes compartir conversaciones mediante un enlace público usando el icono 🔗.
+                El enlace se copia automáticamente al portapapeles y permite visualizar
+                la conversación en modo solo lectura.
+            </p>
+        </div>
+
+        <div class="help-card">
+            <h3>Recurso JSON</h3>
+            <p>
+                Cada conversación tiene un recurso JSON propio. Puedes visualizarlo
+                con el botón Ver JSON o descargarlo usando el botón de descarga.
+            </p>
+        </div>
+
+        <div class="help-card">
+            <h3>HTMX</h3>
+            <p>
+                El chat usa HTMX para enviar mensajes y actualizar partes de la página
+                sin recargarla completa, como la conversación activa y la barra lateral.
+            </p>
+        </div>
+
+        <div class="help-card">
+            <h3>ChatIA escribiendo</h3>
+            <p>
+                Mientras se genera una respuesta, aparece un indicador visual para
+                mostrar que ChatIA está procesando el mensaje.
+            </p>
+        </div>
+
+        <div class="help-card">
+            <h3>Diseño</h3>
+            <p>
+                La interfaz usa Bootstrap, CSS propio, favicon personalizado y una
+                estructura responsive para adaptarse a distintos tamaños de pantalla.
+            </p>
+        </div>
+
+        <div class="help-card">
+            <h3>Seguridad</h3>
+            <p>
+                Las páginas privadas requieren iniciar sesión. Django gestiona la
+                autenticación mediante sesiones y protege los formularios con CSRF.
+            </p>
+        </div>
+
+
+
+    </div>
+
+</div>
+
+{% endblock %}

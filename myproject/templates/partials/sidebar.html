@@ -1,0 +1,35 @@
+<div class="conversation-count">
+    Nº de Conversaciones: {{ total_conversaciones|default:0 }}
+</div>
+
+<div class="conversation-list">
+    {% if conversaciones %}
+        {% for conv in conversaciones %}
+            <div class="conversation-card">
+
+                <a href="{% url 'ver_conversacion' conv.id %}" class="conversation-link">
+                    {{ conv.titulo }}
+                </a>
+
+                <a href="{% url 'marcar_favorita' conv.id %}" class="favorite-btn">
+                    {% if conv.favorita %}
+                        ★
+                    {% else %}
+                        ☆
+                    {% endif %}
+                </a>
+
+                <a href="{% url 'editar_conversacion' conv.id %}" class="edit-btn">
+                    ✎
+                </a>
+
+                <a href="{% url 'eliminar_conversacion' conv.id %}" class="delete-btn">
+                    ×
+                </a>
+
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="empty-conversations">No hay conversaciones.</p>
+    {% endif %}
+</div>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChatIA - Inicio</title>
+
+<link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'styles.css' %}">
+<link rel="stylesheet" href="{% static 'index.css' %}">
+<link rel="icon" href="{% static 'img/logochat.png' %}">
+
+
+</head>
+
+<body>
+
+<!-- BURBUJAS FLOTANTES -->
+<div class="bubble bubble1"></div>
+<div class="bubble bubble2"></div>
+<div class="bubble bubble3"></div>
+<div class="bubble bubble4"></div>
+<div class="bubble bubble5"></div>
+<div class="bubble bubble6"></div>
+<div class="bubble bubble7"></div>
+<div class="bubble bubble8"></div>
+<div class="bubble bubble9"></div>
+<div class="bubble bubble10"></div>
+<div class="bubble bubble11"></div>
+<div class="bubble bubble12"></div>
+<div class="bubble bubble13"></div>
+<div class="bubble bubble14"></div>
+<div class="bubble bubble15"></div>
+
+<div class="landing-page">
+
+    <!-- LOGO -->
+    <img src="{% static 'img/logochat.png' %}" alt="ChatIA Logo"
+         style="width:120px; height:120px; object-fit:contain; margin-bottom:25px;">
+
+    <!-- TITULO HERO -->
+    <h1>Bienvenido a ChatIA</h1>
+    <p class="lead">
+        ChatIA te permite mantener conversaciones inteligentes, favoritos y estadísticas.
+    </p>
+
+    <!-- BOTONES HERO -->
+    <div class="landing-buttons">
+        <a href="{% url 'login' %}" class="btn btn-burdeos">Iniciar sesión</a>
+        <a href="{% url 'registro' %}" class="btn btn-burdeos-outline">Registrarse</a>
+    </div>
+
+    {% if user.is_authenticated %}
+        <div style="margin-top:-25px; margin-bottom:50px;">
+
+            <a href="{% url 'chat_principal' %}" class="btn btn-burdeos">
+                Ir al chat
+            </a>
+
+        </div>
+
+    {% endif %}
+
+    <!-- CARRUSEL DE CARACTERÍSTICAS -->
+    <div class="features-section">
+        <div class="feature-card">
+            <div class="icon">💬</div>
+            <strong>Conversaciones rápidas</strong>
+            <p>Chatea con la IA y recibe respuestas inmediatas.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">🧠</div>
+            <strong>Memoria inteligente</strong>
+            <p>La IA recuerda el historial de cada conversación.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">⭐</div>
+            <strong>Favoritos</strong>
+            <p>Marca conversaciones importantes y accede rápido.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">📊</div>
+            <strong>Estadísticas</strong>
+            <p>Consulta tus mensajes y uso de IA fácilmente.</p>
+        </div>
+    </div>
+
+    <!-- SECCIÓN CÓMO EMPEZAR -->
+    <div class="steps-section">
+        <div class="step-card">
+            <div class="step-number">1</div>
+            <div>Regístrate o inicia sesión para acceder a ChatIA.</div>
+        </div>
+        <div class="step-card">
+            <div class="step-number">2</div>
+            <div>Crea tu primera conversación o selecciona una existente.</div>
+        </div>
+        <div class="step-card">
+            <div class="step-number">3</div>
+            <div>Pregunta a ChatIA y observa cómo recuerda el contexto.</div>
+        </div>
+    </div>
+
+    <!-- TESTIMONIOS -->
+    <div class="testimonials">
+        <div class="testimonial-card">
+            “ChatIA organiza tus conversaciones y respuestas de manera fácil.” – Usuario
+        </div>
+        <div class="testimonial-card">
+            “La memoria de la IA permite retomar temas anteriores sin perder contexto.” – Usuario
+        </div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="landing-footer">
+    &copy; 2026 ChatIA - Todos los derechos reservados
+</div>
+
+</body>
+</html>

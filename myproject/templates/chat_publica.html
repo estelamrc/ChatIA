@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ conversacion.titulo }} - ChatIA</title>
+
+    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="icon" href="{% static 'img/logochat.png' %}">
+</head>
+
+<body>
+
+<div class="public-chat-page">
+
+    <div class="public-header">
+        <img src="{% static 'img/logochat.png' %}" alt="Logo ChatIA" class="public-logo">
+        <div>
+            <h1>{{ conversacion.titulo }}</h1>
+            <p>Conversación pública compartida desde ChatIA.</p>
+        </div>
+    </div>
+
+    <div class="messages-container public-messages">
+
+        {% for mensaje in mensajes %}
+
+            {% if mensaje.rol == "usuario" or mensaje.rol == "user" %}
+
+                <div class="message-row user-row">
+                    <div class="message-bubble user-bubble">
+                        <strong>Tú</strong>
+                        <div class="message-content">
+                            {{ mensaje.contenido|safe }}
+                        </div>
+                    </div>
+                </div>
+
+            {% else %}
+
+                <div class="message-row ai-row">
+                    <div class="message-bubble ai-bubble">
+                        <strong>ChatIA</strong>
+                        <div class="message-content">
+                            {{ mensaje.contenido|safe }}
+                        </div>
+                    </div>
+                </div>
+
+            {% endif %}
+
+        {% empty %}
+
+            <div class="empty-chat">
+                <h2>Esta conversación no tiene mensajes.</h2>
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+{% for mensaje in mensajes %}
+
+    {% if mensaje.rol == "usuario" or mensaje.rol == "user" %}
+        <div class="message-row user-row">
+            <div class="message-bubble user-bubble">
+                <strong>Tú</strong>
+                <div class="message-content">
+                    {{ mensaje.contenido|safe }}
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="message-row ai-row">
+            <div class="message-bubble ai-bubble">
+                <strong>ChatIA</strong>
+                    <!-- el |safe es para que no se interprete como HTML -->
+                <div class="message-content">
+                    {{ mensaje.contenido|safe }}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+{% empty %}
+
+    <div class="empty-chat">
+        <h2>Bienvenido a ChatIA</h2>
+        <p>Empieza escribiendo un mensaje.</p>
+    </div>
+
+{% endfor %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="chat-page">
+    <div class="chat-form">
+
+        <h1>Iniciar sesión</h1>
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <button type="submit" class="btn send-btn">
+                Entrar
+            </button>
+        </form>
+
+        <p class="mt-3">
+            ¿No tienes cuenta?
+            <a href="{% url 'registro' %}">Crear usuario</a>
+        </p>
+
+    </div>
+</div>
+
+{% endblock %}
