@@ -5,6 +5,7 @@ from django.urls import reverse
 
 from .models import Conversacion, Mensaje, PerfilUsuario
 
+
 # Create your tests here.
 
 
@@ -190,3 +191,44 @@ class ChatIATests(TestCase):
         self.perfil.refresh_from_db()
         self.assertEqual(self.perfil.alias, "NuevoAlias")
         self.assertEqual(self.perfil.tamano_fuente, "grande")
+
+
+class TestFuncionalidadesOpcionales(TestCase):
+
+    def setUp(self):
+        #usuario de prueba
+        self.user = User.objects.create_user(username="testuser", password="12345")
+
+    def test_generar_hash_publico(self):
+        # Creamos una conversación sin hash
+        conv = Conversacion.objects.create(user=self.user, titulo="Prueba Hash")
+        self.assertIsNone(conv.hash_publico)
+
+        # Generamos hash
+        conv.generar_hash_publico()
+        self.assertIsNotNone(conv.hash_publico)
+        self.assertEqual(len(conv.hash_publico), 32)  # Debe ser un hex de 16 bytes = 32 caracteres
+
+    def test_favorita(self):
+        # Crear conversación
+        conv = Conversacion.objects.create(user=self.user, titulo="Prueba Favorita")
+        conv.favorita = False
+        conv.save()
+
+        # Marcar como favorita
+        conv.favorita = True
+        conv.save()
+
+        # Comprobar que se actualiza
+        conv.refresh_from_db()
+        self.assertTrue(conv.favorita)
+
+    def test_configuracion_usuario_alias(self):
+        # Si tienes un modelo PerfilUsuario relacionado con el user
+        from .models import PerfilUsuario
+
+        perfil = PerfilUsuario.objects.create(user=self.user, alias="MiAlias", temperatura=0.2, tamano_fuente="normal")
+
+        self.assertEqual(perfil.alias, "MiAlias")
+        self.assertEqual(perfil.temperatura, 0.2)
+        self.assertEqual(perfil.tamano_fuente, "normal")
