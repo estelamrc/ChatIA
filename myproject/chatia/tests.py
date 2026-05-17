@@ -1,4 +1,3 @@
-from django.contrib.gis.db.backends.postgis.const import POSTGIS_TO_GDAL
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -199,6 +198,7 @@ class TestFuncionalidadesOpcionales(TestCase):
         #usuario de prueba
         self.user = User.objects.create_user(username="testuser", password="12345")
 
+    # este test comprueba que se genera un hash publico
     def test_generar_hash_publico(self):
         # Creamos una conversación sin hash
         conv = Conversacion.objects.create(user=self.user, titulo="Prueba Hash")
@@ -209,6 +209,7 @@ class TestFuncionalidadesOpcionales(TestCase):
         self.assertIsNotNone(conv.hash_publico)
         self.assertEqual(len(conv.hash_publico), 32)  # Debe ser un hex de 16 bytes = 32 caracteres
 
+    # este test comprueba que se marca una conversación como favorita
     def test_favorita(self):
         # Crear conversación
         conv = Conversacion.objects.create(user=self.user, titulo="Prueba Favorita")
@@ -223,6 +224,7 @@ class TestFuncionalidadesOpcionales(TestCase):
         conv.refresh_from_db()
         self.assertTrue(conv.favorita)
 
+    # este test comprueba que se configura el alias del usuario
     def test_configuracion_usuario_alias(self):
         # Si tienes un modelo PerfilUsuario relacionado con el user
         from .models import PerfilUsuario

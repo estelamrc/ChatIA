@@ -11,6 +11,12 @@
             {% csrf_token %}
             {{ form.as_p }}
 
+            {% if error %}
+                <div class="alert alert-danger mt-2">
+                    {{ error }}
+                </div>
+            {% endif %}
+
             <button type="submit" class="btn send-btn">
                 Entrar
             </button>

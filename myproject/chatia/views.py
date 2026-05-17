@@ -2,16 +2,20 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponse
+#para el 401
 from .models import Conversacion, Mensaje, PerfilUsuario
 from .forms import MensajeForm, ConversacionForm, ConfiguracionUsuarioForm
 from .forms import RegistroUsuarioForm, LoginUsuarioForm
 from .llm import pedir_respuesta_nvidia
 from django.http import JsonResponse
 
-
 import markdown
+#respuesta de la ia en markdown (bonitas)
 
 # Create your views here.
+
+
 def generar_titulo_automatico(texto):
     palabras_vacias = [
         "explicame", "explícame", "que","qué", "cual", "cuál", "dime",
@@ -321,10 +325,14 @@ def login_usuario(request):
 
             if user is not None:
                 login(request, user)
-                return redirect("chat_principal")
+                next_url = request.GET.get("next", "chat_principal")
+                return redirect(next_url)
             else:
-                form.add_error(None, "Usuario o contraseña incorrectos.")
-
+                # Usuario o contraseña incorrectos
+                mensaje_error = "Usuario o contraseña incorrectos"
+                response = render(request, "login.html", {"form": form, "error": mensaje_error})
+                response.status_code = 401  # Aquí sigue devolviendo el 401
+                return response
     else:
         form = LoginUsuarioForm()
 

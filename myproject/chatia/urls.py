@@ -10,7 +10,6 @@ urlpatterns = [
     path("ayuda/", views.ayuda, name="ayuda"),
     path("sidebar/", views.sidebar_partial, name="sidebar_partial"),
     path("configuracion/", views.configuracion_usuario, name="configuracion_usuario"),
-
     path("chat/nuevo/", views.nueva_conversacion, name="nueva_conversacion"),
 
     path("compartir/<int:conversacion_id>/", views.compartir_conversacion, name="compartir_conversacion"),

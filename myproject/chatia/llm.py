@@ -1,7 +1,6 @@
 import os
 import requests
 
-
 def pedir_respuesta_nvidia(mensajes, temperatura=0.7):
     api_key = os.getenv("NVIDIA_API_KEY")
     modelo = os.getenv("NVIDIA_MODEL", "google/gemma-2-2b-it")
@@ -15,6 +14,7 @@ def pedir_respuesta_nvidia(mensajes, temperatura=0.7):
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json",
     }
+
 
     data = {
         "model": modelo,
