@@ -5,13 +5,11 @@
 
 * Nombre: Estela Mª Rodríguez Césaro
 * Titulación: Ingeniería Telemática
-* Cuenta en laboratorios: estelam
 * Cuenta URJC: em.rodriguez.2022@alumnos.urjc.es
 * Video básico (url): https://youtu.be/ZiyHJy83zO8
 * Video parte opcional (url): https://youtu.be/up_FccxIvQM 
 * Despliegue (url): https://estelaok.pythonanywhere.com/
-* Contraseñas: profe/0000 (usuario/contraseña)
-* Cuenta Admin Site: admin/admin
+
 
 ## Recursos implementados y métodos disponibles para cada recurso
 
