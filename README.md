@@ -1,8 +1,6 @@
 
 # ENTREGA CONVOCATORIA MAYO
 
-# ENTREGA DE PRÁCTICA
-
 ## Datos
 
 * Nombre: Estela Mª Rodríguez Césaro
