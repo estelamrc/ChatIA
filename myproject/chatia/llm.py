@@ -3,7 +3,7 @@ import requests
 
 def pedir_respuesta_nvidia(mensajes, temperatura=0.7):
     api_key = os.getenv("NVIDIA_API_KEY")
-    modelo = os.getenv("NVIDIA_MODEL", "google/gemma-2-2b-it")
+    modelo = os.getenv("NVIDIA_MODEL", "meta/llama-3.3-70b-instruct")
 
     if not api_key:
         return "Error: no se ha encontrado NVIDIA_API_KEY en el archivo .env"
